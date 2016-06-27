@@ -91,7 +91,7 @@ PROFILE_RESPONSE = AttrDict({
 class CustomerAPITests(TestCase):
     def setUp(self):
         self.patcher = mock.patch(
-            'authorize.apis.customer.Client')
+            'authorizesauce.apis.customer.Client')
         self.Client = self.patcher.start()
         self.api = CustomerAPI('123', '456')
 

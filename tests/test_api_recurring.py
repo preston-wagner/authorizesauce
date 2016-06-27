@@ -32,7 +32,7 @@ ERROR = AttrDict({
 class RecurringAPITests(TestCase):
     def setUp(self):
         self.patcher = mock.patch(
-            'authorize.apis.recurring.Client')
+            'authorizesauce.apis.recurring.Client')
         self.Client = self.patcher.start()
         self.api = RecurringAPI('123', '456')
 

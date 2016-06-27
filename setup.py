@@ -74,8 +74,8 @@ setup(
         'six>=1.9.0',
     ],
     packages=[
-        'authorize',
-        'authorize.apis',
+        'authorizesauce',
+        'authorizesauce.apis',
     ],
     classifiers=[
         'Development Status :: 4 - Beta',

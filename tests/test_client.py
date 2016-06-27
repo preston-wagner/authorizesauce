@@ -25,13 +25,13 @@ TRANSACTION_RESULT = {
 class ClientTests(TestCase):
     def setUp(self):
         self.transaction_api_patcher = mock.patch(
-            'authorize.client.TransactionAPI')
+            'authorizesauce.client.TransactionAPI')
         self.transaction_api = self.transaction_api_patcher.start()
         self.customer_api_patcher = mock.patch(
-            'authorize.client.CustomerAPI')
+            'authorizesauce.client.CustomerAPI')
         self.customer_api = self.customer_api_patcher.start()
         self.recurring_api_patcher = mock.patch(
-            'authorize.client.RecurringAPI')
+            'authorizesauce.client.RecurringAPI')
         self.recurring_api = self.recurring_api_patcher.start()
         self.client = AuthorizeClient('123', '456')
         self.year = date.today().year + 10
