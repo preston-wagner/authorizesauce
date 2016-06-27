@@ -8,8 +8,8 @@ import random
 
 from unittest2 import skipUnless, TestCase
 
-from authorize import Address, AuthorizeClient, CreditCard
-from authorize.exceptions import AuthorizeResponseError
+from authorizesauce import Address, AuthorizeClient, CreditCard
+from authorizesauce.exceptions import AuthorizeResponseError
 
 
 # Authorize.net developer login for test (https://test.authorize.net)

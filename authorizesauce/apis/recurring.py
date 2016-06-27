@@ -5,7 +5,7 @@ from ssl import SSLError
 from suds import WebFault
 from suds.client import Client
 
-from authorize.exceptions import AuthorizeConnectionError, \
+from ..exceptions import AuthorizeConnectionError, \
     AuthorizeInvalidError, AuthorizeResponseError
 
 

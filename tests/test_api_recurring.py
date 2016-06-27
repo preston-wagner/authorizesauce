@@ -5,9 +5,9 @@ from suds import WebFault
 from ssl import SSLError
 from unittest2 import TestCase
 
-from authorize.apis.recurring import PROD_URL, RecurringAPI, TEST_URL
-from authorize.data import CreditCard
-from authorize.exceptions import AuthorizeConnectionError, \
+from authorizesauce.apis.recurring import PROD_URL, RecurringAPI, TEST_URL
+from authorizesauce.data import CreditCard
+from authorizesauce.exceptions import AuthorizeConnectionError, \
     AuthorizeInvalidError, AuthorizeResponseError
 
 

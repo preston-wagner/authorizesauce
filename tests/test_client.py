@@ -3,8 +3,8 @@ from datetime import date
 import mock
 from unittest2 import TestCase
 
-from authorize import Address, AuthorizeClient, CreditCard
-from authorize.client import AuthorizeCreditCard, AuthorizeRecurring, \
+from authorizesauce import Address, AuthorizeClient, CreditCard
+from authorizesauce.client import AuthorizeCreditCard, AuthorizeRecurring, \
     AuthorizeSavedCard, AuthorizeTransaction
 from test_api_customer import PROFILE
 

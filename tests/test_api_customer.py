@@ -6,9 +6,9 @@ from suds import WebFault
 from ssl import SSLError
 from unittest2 import TestCase
 
-from authorize.apis.customer import CustomerAPI, PROD_URL, TEST_URL
-from authorize.data import Address, CreditCard
-from authorize.exceptions import AuthorizeConnectionError, \
+from authorizesauce.apis.customer import CustomerAPI, PROD_URL, TEST_URL
+from authorizesauce.data import Address, CreditCard
+from authorizesauce.exceptions import AuthorizeConnectionError, \
     AuthorizeResponseError
 
 

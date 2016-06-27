@@ -7,8 +7,8 @@ from unittest2 import TestCase
 import mock
 
 from authorizesauce.apis.transaction import PROD_URL, TEST_URL, TransactionAPI
-from authorize.data import Address, CreditCard
-from authorize.exceptions import AuthorizeConnectionError, \
+from authorizesauce.data import Address, CreditCard
+from authorizesauce.exceptions import AuthorizeConnectionError, \
     AuthorizeResponseError
 
 

@@ -18,9 +18,9 @@ Authorize.net_.
 """
 from uuid import uuid4
 
-from authorize.apis.customer import CustomerAPI
-from authorize.apis.recurring import RecurringAPI
-from authorize.apis.transaction import TransactionAPI
+from .apis.customer import CustomerAPI
+from .apis.recurring import RecurringAPI
+from .apis.transaction import TransactionAPI
 
 
 class AuthorizeClient(object):
@@ -49,10 +49,10 @@ class AuthorizeClient(object):
     def card(self, credit_card, address=None, email=None):
         """
         To work with a credit card, pass in a
-        :class:`CreditCard <authorize.data.CreditCard>` instance, and
-        optionally an :class:`Address <authorize.data.Address>` instance. This
+        :class:`CreditCard <authorizesauce.data.CreditCard>` instance, and
+        optionally an :class:`Address <authorizesauce.data.Address>` instance. This
         will return an
-        :class:`AuthorizeCreditCard <authorize.client.AuthorizeCreditCard>`
+        :class:`AuthorizeCreditCard <authorizesauce.client.AuthorizeCreditCard>`
         instance you can then use to execute transactions.
         ``email`` is only required for those using European payment processors.
         """
@@ -63,7 +63,7 @@ class AuthorizeClient(object):
         """
         To perform an action on a previous transaction, pass in the ``uid`` of
         that transaction as a string. This will return an
-        :class:`AuthorizeTransaction <authorize.client.AuthorizeTransaction>`
+        :class:`AuthorizeTransaction <authorizesauce.client.AuthorizeTransaction>`
         instance you can then use to settle, credit or void that transaction.
         """
         return AuthorizeTransaction(self, uid)
@@ -72,7 +72,7 @@ class AuthorizeClient(object):
         """
         To create a new transaction from a saved card, pass in the ``uid`` of
         the saved card as a string. This will return an
-        :class:`AuthorizeSavedCard <authorize.client.AuthorizeSavedCard>`
+        :class:`AuthorizeSavedCard <authorizesauce.client.AuthorizeSavedCard>`
         instance you can then use to auth, capture, or create a credit.
         """
         return AuthorizeSavedCard(self, uid)
@@ -81,7 +81,7 @@ class AuthorizeClient(object):
         """
         To update or cancel an existing recurring payment, pass in the ``uid``
         of the recurring payment as a string. This will return an
-        :class:`AuthorizeRecurring <authorize.client.AuthorizeRecurring>`
+        :class:`AuthorizeRecurring <authorizesauce.client.AuthorizeRecurring>`
         instance you can then use to udpate or cancel the payments.
         """
         return AuthorizeRecurring(self, uid)
@@ -111,7 +111,7 @@ class AuthorizeCreditCard(object):
         Authorize a transaction against this card for the specified amount.
         This verifies the amount is available on the card and reserves it.
         Returns an
-        :class:`AuthorizeTransaction <authorize.client.AuthorizeTransaction>`
+        :class:`AuthorizeTransaction <authorizesauce.client.AuthorizeTransaction>`
         instance representing the transaction.
         """
         response = self._client._transaction.auth(
@@ -124,7 +124,7 @@ class AuthorizeCreditCard(object):
         """
         Capture a transaction immediately on this card for the specified
         amount. Returns an
-        :class:`AuthorizeTransaction <authorize.client.AuthorizeTransaction>`
+        :class:`AuthorizeTransaction <authorizesauce.client.AuthorizeTransaction>`
         instance representing the transaction.
         """
         response = self._client._transaction.capture(
@@ -137,7 +137,7 @@ class AuthorizeCreditCard(object):
         """
         Saves the credit card on Authorize.net's servers so you can create
         transactions at a later date. Returns an
-        :class:`AuthorizeSavedCard <authorize.client.AuthorizeSavedCard>`
+        :class:`AuthorizeSavedCard <authorizesauce.client.AuthorizeSavedCard>`
         instance that you can save or use.
         """
         unique_id = uuid4().hex[:20]
@@ -182,7 +182,7 @@ class AuthorizeCreditCard(object):
             specify the number of occurrences that period should last.
 
         Returns an
-        :class:`AuthorizeRecurring <authorize.client.AuthorizeRecurring>`
+        :class:`AuthorizeRecurring <authorizesauce.client.AuthorizeRecurring>`
         instance that you can save, update or delete.
         """
         uid = self._client._recurring.create_subscription(
@@ -218,7 +218,7 @@ class AuthorizeTransaction(object):
         ``amount`` is specified, the full amount will be settled; if a lower
         ``amount`` is provided, the lower amount will be settled; if a higher
         ``amount`` is given, it will result in an error. Returns an
-        :class:`AuthorizeTransaction <authorize.client.AuthorizeTransaction>`
+        :class:`AuthorizeTransaction <authorizesauce.client.AuthorizeTransaction>`
         instance representing the settlement transaction.
         """
         response = self._client._transaction.settle(self.uid, amount=amount)
@@ -231,18 +231,18 @@ class AuthorizeTransaction(object):
         Creates a credit (refund) back on the original transaction. The
         ``card_number`` should be the last four digits of the credit card
         and the ``amount`` is the amount to credit the card. Returns an
-        :class:`AuthorizeTransaction <authorize.client.AuthorizeTransaction>`
+        :class:`AuthorizeTransaction <authorizesauce.client.AuthorizeTransaction>`
         instance representing the credit transaction.
 
         Credit transactions are bound by a number of restrictions:
 
         * The original transaction must be an existing, settled charge. (Note
           that this is different than merely calling the
-          :meth:`AuthorizeTransaction.settle <authorize.client.AuthorizeTransaction.settle>`
+          :meth:`AuthorizeTransaction.settle <authorizesauce.client.AuthorizeTransaction.settle>`
           method, which submits a payment for settlement. In production,
           Authorize.net actually settles charges once daily. Until a charge is
           settled, you should use
-          :meth:`AuthorizeTransaction.void <authorize.client.AuthorizeTransaction.void>`
+          :meth:`AuthorizeTransaction.void <authorizesauce.client.AuthorizeTransaction.void>`
           instead.)
         * The amount of the credit (as well as the sum of all credits against
           this original transaction) must be less than or equal to the
@@ -260,7 +260,7 @@ class AuthorizeTransaction(object):
         """
         Voids a previous authorization that has not yet been settled. Returns
         an
-        :class:`AuthorizeTransaction <authorize.client.AuthorizeTransaction>`
+        :class:`AuthorizeTransaction <authorizesauce.client.AuthorizeTransaction>`
         instance representing the void transaction.
         """
         response = self._client._transaction.void(self.uid)
@@ -273,7 +273,7 @@ class AuthorizeSavedCard(object):
     """
     This is the interface for working with a saved credit card. It is returned
     by the
-    :meth:`AuthorizeCreditCard.save <authorize.client.AuthorizeCreditCard.save>`
+    :meth:`AuthorizeCreditCard.save <authorizesauce.client.AuthorizeCreditCard.save>`
     method, or you can save a saved card's ``uid`` and reinstantiate it later.
 
     You can then use this saved card to create new authorizations, captures,
@@ -282,11 +282,11 @@ class AuthorizeSavedCard(object):
     with.
 
     You can also retrieve payment information with the
-    :meth:`AuthorizeSavedCard.get_payment_info <authorize.client.AuthorizeSavedCard.get_payment_info`
+    :meth:`AuthorizeSavedCard.get_payment_info <authorizesauce.client.AuthorizeSavedCard.get_payment_info`
     method.
 
     You can update this information by setting it and running the
-    :meth:`AuthorizeSavedCard.update <authorize.client.AuthorizeSavedCard.update>`
+    :meth:`AuthorizeSavedCard.update <authorizesauce.client.AuthorizeSavedCard.update>`
     method.
     """
 
@@ -303,7 +303,7 @@ class AuthorizeSavedCard(object):
         Authorize a transaction against this card for the specified amount.
         This verifies the amount is available on the card and reserves it.
         Returns an
-        :class:`AuthorizeTransaction <authorize.client.AuthorizeTransaction>`
+        :class:`AuthorizeTransaction <authorizesauce.client.AuthorizeTransaction>`
         instance representing the transaction.
         """
         response = self._client._customer.auth(
@@ -316,7 +316,7 @@ class AuthorizeSavedCard(object):
         """
         Capture a transaction immediately on this card for the specified
         amount. Returns an
-        :class:`AuthorizeTransaction <authorize.client.AuthorizeTransaction>`
+        :class:`AuthorizeTransaction <authorizesauce.client.AuthorizeTransaction>`
         instance representing the transaction.
         """
         response = self._client._customer.capture(
@@ -342,7 +342,7 @@ class AuthorizeSavedCard(object):
             The last name on the card
 
         ``address`` *(optional)*
-            An :class:`Address <authorize.data.Address>` object that holds new
+            An :class:`Address <authorizesauce.data.Address>` object that holds new
             billing address information for the card.
 
         ``email`` *(optional)*
@@ -374,7 +374,7 @@ class AuthorizeSavedCard(object):
         """
         Retrieves information about a card. It will return a dictionary
         containing the ``first_name`` and ``last_name`` on the card, as well
-        as an ``address`` (a :class:`Address <authorize.data.Address>`
+        as an ``address`` (a :class:`Address <authorizesauce.data.Address>`
         instance), and the user's ``email``. These can be used, for instance,
         to populate a form which the user can fill to update their payment
         information.
@@ -398,7 +398,7 @@ class AuthorizeRecurring(object):
     """
     This is the interface for working with a recurring charge. It is returned
     by the
-    :meth:`AuthorizeCreditCard.recurring <authorize.client.AuthorizeCreditCard.recurring>`
+    :meth:`AuthorizeCreditCard.recurring <authorizesauce.client.AuthorizeCreditCard.recurring>`
     method, or you can save a recurring payment's ``uid`` and reinstantiate it
     later.
 

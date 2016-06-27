@@ -3,7 +3,7 @@ from six import PY2, b, text_type
 from six.moves.urllib.parse import urlencode
 from six.moves.urllib.request import urlopen
 
-from authorize.exceptions import AuthorizeConnectionError, \
+from ..exceptions import AuthorizeConnectionError, \
     AuthorizeResponseError
 
 

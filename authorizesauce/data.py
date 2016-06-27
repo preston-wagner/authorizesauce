@@ -7,7 +7,7 @@ import calendar
 from datetime import datetime
 import re
 
-from authorize.exceptions import AuthorizeInvalidError
+from .exceptions import AuthorizeInvalidError
 
 
 CARD_TYPES = {
@@ -26,7 +26,7 @@ class CreditCard(object):
     Pass in the credit card number, expiration date, CVV code, and optionally
     a first name and last name. The card will be validated upon instatiation
     and will raise an
-    :class:`AuthorizeInvalidError <authorize.exceptions.AuthorizeInvalidError>`
+    :class:`AuthorizeInvalidError <authorizesauce.exceptions.AuthorizeInvalidError>`
     for invalid credit card numbers, past expiration dates, etc.
     """
     def __init__(self, card_number=None, exp_year=None, exp_month=None,
@@ -45,7 +45,7 @@ class CreditCard(object):
     def validate(self):
         """
         Validates the credit card data and raises an
-        :class:`AuthorizeInvalidError <authorize.exceptions.AuthorizeInvalidError>`
+        :class:`AuthorizeInvalidError <authorizesauce.exceptions.AuthorizeInvalidError>`
         if anything doesn't check out. You shouldn't have to call this
         yourself.
         """

@@ -36,7 +36,7 @@ test
 
 """
 
-from authorize.client import AuthorizeClient
-from authorize.data import Address, CreditCard
-from authorize.exceptions import AuthorizeConnectionError, AuthorizeError, \
+from .client import AuthorizeClient
+from .data import Address, CreditCard
+from .exceptions import AuthorizeConnectionError, AuthorizeError, \
     AuthorizeInvalidError, AuthorizeResponseError

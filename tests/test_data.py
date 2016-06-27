@@ -2,8 +2,8 @@ from datetime import date, datetime, timedelta
 
 from unittest2 import TestCase
 
-from authorize.data import Address, CreditCard
-from authorize.exceptions import AuthorizeInvalidError
+from authorizesauce.data import Address, CreditCard
+from authorizesauce.exceptions import AuthorizeInvalidError
 
 
 TEST_CARD_NUMBERS = [

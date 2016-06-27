@@ -6,10 +6,10 @@ from ssl import SSLError
 
 from suds import WebFault
 from suds.client import Client
-from authorize.data import Address, CreditCard
+from ..data import Address, CreditCard
 
-from authorize.apis.transaction import parse_response
-from authorize.exceptions import AuthorizeConnectionError, \
+from .transaction import parse_response
+from ..exceptions import AuthorizeConnectionError, \
     AuthorizeError, AuthorizeResponseError, AuthorizeInvalidError
 
 PROD_URL = 'https://api.authorize.net/soap/v1/Service.asmx?WSDL'
