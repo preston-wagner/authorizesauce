@@ -93,7 +93,7 @@ class TransactionAPI(object):
             raise e
         return fields
 
-    def _add_params(self, params, credit_card=None, address=None, email=None):
+    def _add_params(self, params, credit_card=None, address=None, email=None, invoice_num=None):
         if credit_card:
             params.update({
                 'x_card_num': credit_card.card_number,
@@ -114,23 +114,27 @@ class TransactionAPI(object):
                 'x_zip': address.zip_code,
                 'x_country': address.country,
             })
+
+        if invoice_num:
+            params['x_invoice_num'] = invoice_num
+
         for key, value in list(params.items()):
             if value is None:
                 del params[key]
         return params
 
-    def auth(self, amount, credit_card, address=None, email=None):
+    def auth(self, amount, credit_card, address=None, email=None, invoice_num=None):
         amount = Decimal(str(amount)).quantize(Decimal('0.01'))
         params = self.base_params.copy()
-        params = self._add_params(params, credit_card, address, email)
+        params = self._add_params(params, credit_card, address, email, invoice_num=invoice_num)
         params['x_type'] = 'AUTH_ONLY'
         params['x_amount'] = str(amount)
         return self._make_call(params)
 
-    def capture(self, amount, credit_card, address=None, email=None):
+    def capture(self, amount, credit_card, address=None, email=None, invoice_num=None):
         amount = Decimal(str(amount)).quantize(Decimal('0.01'))
         params = self.base_params.copy()
-        params = self._add_params(params, credit_card, address, email)
+        params = self._add_params(params, credit_card, address, email, invoice_num=invoice_num)
         params['x_type'] = 'AUTH_CAPTURE'
         params['x_amount'] = str(amount)
         return self._make_call(params)

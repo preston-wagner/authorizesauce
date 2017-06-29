@@ -217,7 +217,7 @@ class CustomerAPI(object):
         self._make_call('DeleteCustomerPaymentProfile',
             profile_id, payment_id)
 
-    def auth(self, profile_id, payment_id, amount, cvv=None):
+    def auth(self, profile_id, payment_id, amount, cvv=None, invoice_num=None):
         if cvv is not None:
             try:
                 int(cvv)
@@ -230,12 +230,14 @@ class CustomerAPI(object):
         auth.customerProfileId = profile_id
         auth.customerPaymentProfileId = payment_id
         auth.cardCode = cvv
+        if invoice_num:
+            auth.invoiceNumber = invoice_num
         transaction.profileTransAuthOnly = auth
         response = self._make_call('CreateCustomerProfileTransaction',
             transaction, self.transaction_options)
         return parse_response(response.directResponse)
 
-    def capture(self, profile_id, payment_id, amount, cvv=None):
+    def capture(self, profile_id, payment_id, amount, cvv=None, invoice_num=None):
         if cvv is not None:
             try:
                 int(cvv)
@@ -248,6 +250,8 @@ class CustomerAPI(object):
         capture.customerProfileId = profile_id
         capture.customerPaymentProfileId = payment_id
         capture.cardCode = cvv
+        if invoice_num:
+            capture.invoiceNumber = invoice_num
         transaction.profileTransAuthCapture = capture
         response = self._make_call('CreateCustomerProfileTransaction',
             transaction, self.transaction_options)
